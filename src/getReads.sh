@@ -2,7 +2,7 @@
 
 bash fastq2fasta.sh $1
 
-bash blastMP.sh $1
+bash blastMP.sh $1 $2
 
 grep -B9 ">" $1_blast.txt | sort | uniq | grep "Query=" | cut -d" " -f2 > $1.reads 
 
