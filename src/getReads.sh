@@ -8,4 +8,4 @@ grep -B9 ">" $1_blast.txt | sort | uniq | grep "Query=" | cut -d" " -f2 > $1.rea
 
 grep -A3 -f $1.reads $1.fastq | sed /^--$/d > $1_MP.fastq   # no empty line in .reads !!
 
-porechop -i $1_MP.fastq -o $1_tr.fastq  # trimming
+porechop -i $1_MP.fastq -o $1_tr.fastq 1> /dev/null # trimming

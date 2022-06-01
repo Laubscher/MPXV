@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -z "$*" ]; then
+echo "Arguments are missing"
+
+fi
+
+if [ -z "$2" ]; then
+CPU=$(nproc)
+else
+CPU=$2
+fi
+
+while getopts ":h" opt; do
+	case $opt in
+                 h)
+                       echo "Usage : gMPXV-2022 -options(-h display this help) [fastqPrefix] [nb of cpu]"
+                       exit 0
+                       ;;
+
+		\?)
+			echo "Unknown option $OPTARG" >&2
+			;;
+	esac
+done
+
+# main
+
+fastq2consensus.sh $1 $CPU  2>"$1".log
+
+exit 0
