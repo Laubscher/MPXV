@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bash getReads.sh $1
+bash getReads.sh $1 $2
 
 bash map2MP.sh $1
 
