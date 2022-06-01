@@ -1,4 +1,5 @@
 #!/bin/bash
+
 samtools sort $1.sam -o $1.sorted.bam
 
 samtools index $1.sorted.bam
