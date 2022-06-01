@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ -z "$*" ]; then
-echo "Arguments are missing"
-
+  echo "Arguments are missing (gMPXV-2022 -h for help)"
+  exit 0
 fi
 
 if [ -z "$2" ]; then
