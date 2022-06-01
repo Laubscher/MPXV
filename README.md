@@ -1,5 +1,5 @@
 # MPXV
-Script to obtain consensus genome of **Monkeypox virus (MPXV)** using **long reads sequencing** from *Oxford Nanopore Technologies*.  
+Scripts to obtain consensus genomes of **Monkeypox virus (MPXV)** using **long reads sequencing** from *Oxford Nanopore Technologies*.  
 Fastq to consensus using [MT903344](https://www.ncbi.nlm.nih.gov/nuccore/MT903344) (monkeypox outbreak 2017) as reference.
 
 Setting : minimum depth **10x**
