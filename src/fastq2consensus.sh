@@ -4,11 +4,13 @@ echo "Starting.."
 
 echo "logfile; Sample:$1" > $1.log
 
-echo "Getting MPXV specific reads.."
+virus=$3
+
+#echo "Getting MPXV specific reads.."
 
 bash getReads.sh $1 $2
 
-echo -e "Found $(wc -l $1.reads) MPXV specific reads"
+#echo -e "Found $(wc -l $1.reads) MPXV specific reads"
 
 #cleaning 1
 
@@ -16,7 +18,20 @@ rm $1.reads $1_blast.txt $1_MP.fastq $1.fasta
 
 echo "Map to reference.."
 
-bash map2MP.sh $1
+echo $virus
+
+if [ $virus == "MPXV" ]
+  then bash map2MP.sh $1
+  fi
+if [ $virus == "HHV1" ]
+  then bash map2HHV1.sh $1
+  fi
+if [ $virus == "HHV2" ]
+  then bash map2HHV2.sh $1
+  fi
+if [ $virus == "VV" ]
+  then bash map2VV.sh $1
+  fi
 
 echo "Generate consensus.."
 
