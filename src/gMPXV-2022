@@ -14,7 +14,7 @@ fi
 while getopts ":hv:" opt; do
 	case $opt in
                  h)
-                       echo "Usage : gMPXV-2022 -options(-h display this help, -v \"viruses\" MPXV, HHV1, HHV2 or VV) [fastqPrefix] [nb of cpu]"
+                       echo "Usage : gMPXV-2022 -options(-h display this help, -v \"viruses\" MPXV, HHV1, HHV2, VV, HAdV-B) [fastqPrefix] [nb of cpu]"
                        exit 0
                        ;;
                  v)
@@ -30,6 +30,6 @@ done
 
 # main
 
-fastq2consensus.sh $1 $CPU $virus 2>"$1".log
+fastq2consensus.sh $1 $CPU $virus $4 2>"$1".log
 
 exit 0
