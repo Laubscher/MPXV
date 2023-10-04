@@ -5,9 +5,9 @@
 
   SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
-  grep "@SQ" $1.sam | cut -f2 -d ":" | cut -f1 > $1.AC  # on récupère les AC 
+  grep "^@SQ" $1.sam | cut -f2 -d ":" | cut -f1 > $1.AC  # on récupère les AC
 
-  maxLen=$(grep "@SQ" $1.sam | cut -f3 -d ":" | cut -f1  | sort -n -r | head -1)   # on récupère la longueur max    
+  maxLen=$(grep "^@SQ" $1.sam | cut -f3 -d ":" | cut -f1  | sort -n -r | head -1)   # on récupère la longueur max
 
   samtools sort $1.sam -o $1.sorted.bam
 

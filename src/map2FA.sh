@@ -10,8 +10,10 @@ minimap2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REmapping
 
   #grep "@SQ" $(echo $1)_RE.sam | cut -f2 -d ":" | cut -f1 > $(echo $1)_RE.AC  # on récupère les AC 
 
-  maxLen=$(grep "@SQ" $(echo $1)_RE.sam | cut -f3 -d ":" | cut -f1  | sort -n -r | head -1) # on récupère la longueur max    
-
+  maxLen=$(grep "^@SQ" $1_RE.sam | cut -f3 -d ":" | cut -f1  | sort -n -r | head -1) # on récupère la longueur max
+  echo $maxLen
+  maxLen=$(( $maxLen + 100 ))
+  echo $maxLen
   samtools sort $(echo $1)_RE.sam -o $(echo $1)_RE.sorted.bam
 
   samtools index $(echo $1)_RE.sorted.bam
