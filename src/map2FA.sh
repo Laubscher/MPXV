@@ -3,10 +3,12 @@
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
 echo "test"
+
 minimap2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REmapping
 
+  grep ">" $1.fa | cut -f2 -d ">" > $(echo $1)_RE.AC
 
-  grep "@SQ" $(echo $1)_RE.sam | cut -f2 -d ":" | cut -f1 > $(echo $1)_RE.AC  # on récupère les AC 
+  #grep "@SQ" $(echo $1)_RE.sam | cut -f2 -d ":" | cut -f1 > $(echo $1)_RE.AC  # on récupère les AC 
 
   maxLen=$(grep "@SQ" $(echo $1)_RE.sam | cut -f3 -d ":" | cut -f1  | sort -n -r | head -1) # on récupère la longueur max    
 
