@@ -27,12 +27,6 @@ echo $virus
 if [ $virus == "MPXV" ]
   then bash map2MP.sh $1
   fi
-if [ $virus == "HHV1" ]
-  then bash map2HHV1.sh $1
-  fi
-if [ $virus == "HHV2" ]
-  then bash map2HHV2.sh $1
-  fi
 if [ $virus == "VV" ]
   then bash map2VV.sh $1
   fi
@@ -42,46 +36,14 @@ if [ $virus == "IIA" ]
 if [ $virus == "I" ]
   then bash mapCladeI.sh $1
   fi
-if [ $virus == "HAdV-B" ]
-  then bash map2HAdV-B.sh $1
-  fi
-if [ $virus == "VZV" ]
-  then bash map2VZV.sh $1
-  fi
-if [ $virus == "AAV2" ]
-  then bash map2AAV2.sh $1
-  fi
-if [ $virus == "CMV" ]
-  then bash map2CMV.sh $1
-  fi
-if [ $virus == "HHV6a" ]
-  then bash mapHHV6a.sh $1
-  fi
-if [ $virus == "HHV6b" ]
-  then bash mapHHV6b.sh $1
-  fi
-if [ $virus == "BK" ]
-  then bash map2BK.sh $1
-  fi
-
 
 echo "Sample_ACCESSION	Genome_positions	Depth" > $1.depth
 
-if [ $virus == "FLUA" ]
-  then bash map2FLU.sh $1
-  echo "Generate consensus.."
-  bash sam2FLUAconsensus.sh $1
-elif [ $virus == "FLUB" ]
-  then bash map2FLUB.sh $1
-  echo "Generate consensus.."
-  bash sam2FLUBconsensus.sh $1
-else
-  echo "Generate consensus.."
-   
-  bash 2consensus.sh $1
-  fi
+
+bash 2consensus.sh $1
 
 #cleaning 2
+
 
 bash $SCRIPT_DIR/map2FA.sh $(echo $1)
 
@@ -109,11 +71,9 @@ for fasta in $(ls $1*.fst);
 
 rm $1*.fst
 
-
 #same on the remaping 
 
 echo "Generate coverage plot.."
-
 
 for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   do echo -n $(echo $1)" "; 
@@ -124,8 +84,4 @@ for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   coverage.r $ac.depth;
   mv Rplots.pdf $(echo $ac)_RE.pdf ;
   echo -n " " ; echo " " $(python $SCRIPT_DIR/depth.py $ac.depth) ;done
-
-
-
-
 
