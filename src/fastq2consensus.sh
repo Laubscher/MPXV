@@ -10,7 +10,7 @@ virus=$3
 
 #if [ $4 != "skip" ] 
   #then 
-bash getReads.sh $1 $2 ; 
+bash getReads.sh $1 $2 ;
 #echo "Getting MPXV specific reads.."
 
 rm $1.reads $1_blast.txt $1_MP.fastq $1.fasta ;
@@ -39,6 +39,9 @@ if [ $virus == "VV" ]
 if [ $virus == "IIA" ]
   then bash mapCladeIIA.sh $1
   fi
+if [ $virus == "I" ]
+  then bash mapCladeI.sh $1
+  fi
 if [ $virus == "HAdV-B" ]
   then bash map2HAdV-B.sh $1
   fi
@@ -48,13 +51,30 @@ if [ $virus == "VZV" ]
 if [ $virus == "AAV2" ]
   then bash map2AAV2.sh $1
   fi
+if [ $virus == "CMV" ]
+  then bash map2CMV.sh $1
+  fi
+if [ $virus == "HHV6a" ]
+  then bash mapHHV6a.sh $1
+  fi
+if [ $virus == "HHV6b" ]
+  then bash mapHHV6b.sh $1
+  fi
+if [ $virus == "BK" ]
+  then bash map2BK.sh $1
+  fi
+
 
 echo "Sample_ACCESSION	Genome_positions	Depth" > $1.depth
 
-if [ $virus == "FLU" ]
+if [ $virus == "FLUA" ]
   then bash map2FLU.sh $1
   echo "Generate consensus.."
   bash sam2FLUAconsensus.sh $1
+elif [ $virus == "FLUB" ]
+  then bash map2FLUB.sh $1
+  echo "Generate consensus.."
+  bash sam2FLUBconsensus.sh $1
 else
   echo "Generate consensus.."
    

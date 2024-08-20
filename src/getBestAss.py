@@ -12,17 +12,13 @@ for l in fasta:
  
 fasta.close()
 
-
 maxSeq=0
 maxAC=""
 for seq in sequencesDico:
   test= int(len(sequencesDico[seq]) - sequencesDico[seq].count("N"))
   if test > maxSeq:
     maxSeq = test
-    maxAC=seq
+    maxAC = seq
 
 print(">"+maxAC)
 print(sequencesDico[maxAC])
-  
-
-

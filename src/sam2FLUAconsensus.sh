@@ -76,4 +76,3 @@
   python $SCRIPT_DIR/getBestAss.py $(echo $1)_A8.fasta > $(echo $1)_A8.fst
   python $SCRIPT_DIR/cropN.py $(echo $1)_A8.fst >> $(echo $1).fa
 
-

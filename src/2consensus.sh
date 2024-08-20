@@ -17,6 +17,8 @@
 
   python $SCRIPT_DIR/bam2consensus.py $1 $1.AC $maxLen
 
+  #bash bam2consensusIVA.sh $1 #$1.AC $maxLen
+  
   #On pourait avoir en fichier avec toute les longueurs en miroir à .AC pour être plus "opti" (faudrait modif bam2consensus pour le prendre comme argument)
    
   python $SCRIPT_DIR/getBestAss.py $(echo $1).fasta > $(echo $1).fst

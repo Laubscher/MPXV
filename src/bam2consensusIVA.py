@@ -8,7 +8,7 @@ import sys
 #argv [1] = prfix, [2] = ref, [3] = len 
 
 bam_fname=str(sys.argv[1])+".sorted.bam"
-ac_threshold=1
+ac_threshold=10
 af_threshold=0.6
 out_fname=str(sys.argv[1])+".fasta"
 
@@ -22,7 +22,8 @@ for ac in fichierAC:
 fichierAC.close()
 
 for i in AClist:
-  consensus[i] = ["N"] * int(sys.argv[3])     # on peut avoir une entrée par ref ici           
+    samtools mpileup -A - Q 0 $1.sorted.bam | ivar consensus -p $1_q10_07_m10 - q 10 - t 0.7 - m 10
+    consensus[i] = ["N"] * int(sys.argv[3])     # on peut avoir une entrée par ref ici
 
 with pysam.AlignmentFile(bam_fname, "rb") as bam:
         allele_counter = Counter()
@@ -34,9 +35,9 @@ with pysam.AlignmentFile(bam_fname, "rb") as bam:
             allele_counter.clear()
             for pileup_read in pileup_column.pileups:
                 if pileup_read.is_del:
-                    #allele = "-"
-                    #allele_counter[allele] += 1
-                    pass #allele = "-" # on part du principe qu'il n'y apas de déletion
+                    allele = "-"
+                    allele_counter[allele] += 1
+                    #pass #allele = "-" # on part du principe qu'il n'y apas de déletion
                 else:
                     allele = pileup_read.alignment.query_sequence[pileup_read.query_position]
                     allele_counter[allele] += 1
@@ -48,6 +49,7 @@ with pysam.AlignmentFile(bam_fname, "rb") as bam:
                     max_count = count
                     max_allele = allele
                 total_count += count
+
             assert max_allele in "ACGTN-"
             if (max_count >= ac_threshold and max_count / total_count >= af_threshold):
                 consensus[ref][pos] = max_allele
