@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
+
+
 if [ -z "$*" ]; then
   echo "Arguments are missing (gMPXV-2024 -h for help)"
   exit 0
@@ -30,6 +33,6 @@ done
 
 # main
 
-fastq2consensus.sh $1 $CPU $virus $4 2>"$1".log
+bash $SCRIPT_DIR/fastq2consensus.sh $1 $CPU $virus $4 2>"$1".log
 
 exit 0

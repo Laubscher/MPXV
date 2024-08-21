@@ -23,9 +23,5 @@
   #second mapping process with the new consensus sequences
   
 
-
-
-
-
   #samtools mpileup -A -Q 0 $1.sorted.bam | ivar consensus -p $1_q10_07_m10 -q 10 -t 0.7 -m 10
 

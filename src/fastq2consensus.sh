@@ -10,7 +10,7 @@ virus=$3
 
 #if [ $4 != "skip" ] 
   #then 
-bash getReads.sh $1 $2 ;
+bash $SCRIPT_DIR/getReads.sh $1 $2 ;
 #echo "Getting MPXV specific reads.."
 
 rm $1.reads $1_blast.txt $1_MP.fastq $1.fasta ;
@@ -25,26 +25,31 @@ echo "Map to reference.."
 echo $virus
 
 if [ $virus == "MPXV" ]
-  then bash map2MP.sh $1
+  then bash $SCRIPT_DIR/map2MP.sh $1
   fi
 if [ $virus == "VV" ]
-  then bash map2VV.sh $1
+  then bash $SCRIPT_DIR/map2VV.sh $1
   fi
 if [ $virus == "IIA" ]
-  then bash mapCladeIIA.sh $1
+  then bash $SCRIPT_DIR/mapCladeIIA.sh $1
   fi
-if [ $virus == "I" ]
-  then bash mapCladeI.sh $1
+if [ $virus == "IB" ]
+  then bash $SCRIPT_DIR/mapCladeIB.sh $1
   fi
+if [ $virus == "ALL" ]
+  then bash $SCRIPT_DIR/map2ALL.sh $1
+
+  fi
+
 
 echo "Sample_ACCESSION	Genome_positions	Depth" > $1.depth
 
 
-bash 2consensus.sh $1
+bash $SCRIPT_DIR/2consensus.sh $1
 
 #cleaning 2
 
-
+rm $1.sam $1.sorted.bam test3.sorted.bam.bai
 bash $SCRIPT_DIR/map2FA.sh $(echo $1)
 
 #rm $1.sam $1_tr.fastq $1_q10_07_m10.qual.txt #$1_Q.sam
@@ -59,7 +64,7 @@ for fasta in $(ls $1*.fst);
  
  echo "Sample_ACCESSION	Genome_positions	Depth" > $AC.depth; 
  grep $AC $1.depth >> $AC.depth ;
- coverage.r $AC.depth;
+ Rscript $SCRIPT_DIR/coverage.r $AC.depth;
  mv Rplots.pdf $AC.pdf ;
  echo " " $(python $SCRIPT_DIR/depth.py $AC.depth) ;done
 
@@ -81,7 +86,9 @@ for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
  
   echo "Sample_ACCESSION	Genome_positions	Depth" > $ac.depth; 
   grep $ac $1_RE.depth >> $ac.depth ;
-  coverage.r $ac.depth;
+  Rscript $SCRIPT_DIR/coverage.r $ac.depth;
   mv Rplots.pdf $(echo $ac)_RE.pdf ;
   echo -n " " ; echo " " $(python $SCRIPT_DIR/depth.py $ac.depth) ;done
 
+#cleaning 4
+rm $1*.AC $1.fa $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam
