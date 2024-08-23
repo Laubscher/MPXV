@@ -16,3 +16,4 @@ need ungziped fastq
 [minimap2](https://github.com/lh3/minimap2)  
 [iVar](https://github.com/andersen-lab/ivar)  
 [Rscript](https://cran.r-project.org/) & ggplot2
+Python3 Package: collections, pysam, Bio, sys
