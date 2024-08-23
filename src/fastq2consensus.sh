@@ -8,15 +8,8 @@ echo "logfile; Sample:$1" > $1.log
 
 virus=$3
 
-#if [ $4 != "skip" ] 
-  #then 
 bash $SCRIPT_DIR/getReads.sh $1 $2 ;
-#echo "Getting MPXV specific reads.."
 
-rm $1.reads $1_blast.txt $1_MP.fastq $1.fasta ;
-  #fi 
-
-#echo -e "Found $(wc -l $1.reads) MPXV specific reads"
 
 #cleaning 1
 
