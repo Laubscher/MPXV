@@ -3,6 +3,12 @@ Scripts to obtain consensus genomes of **Monkeypox virus (MPXV)** using **long r
 
 Setting : minimum depth **10x**
 
+## Usage 
+
+Usage : gMPXV-2024 -v ALL [fastqPrefix] [nb of cpu]
+
+need ungziped fastq
+
 ## Dependencies:
 
 [Porechop](https://github.com/rrwick/Porechop)  
