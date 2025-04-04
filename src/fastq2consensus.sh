@@ -33,7 +33,9 @@ if [ $virus == "ALL" ]
   then bash $SCRIPT_DIR/map2ALL.sh $1
 
   fi
-
+if [ $virus == "TEST" ]
+  then bash $SCRIPT_DIR/mapCladeTEST.sh $1
+  fi
 
 echo "Sample_ACCESSION	Genome_positions	Depth" > $1.depth
 
@@ -42,7 +44,7 @@ bash $SCRIPT_DIR/2consensus.sh $1
 
 #cleaning 2
 
-rm $1.sam $1.sorted.bam test3.sorted.bam.bai
+#rm $1.sam $1.sorted.bam $1.sorted.bam.bai
 bash $SCRIPT_DIR/map2FA.sh $(echo $1)
 
 #rm $1.sam $1_tr.fastq $1_q10_07_m10.qual.txt #$1_Q.sam
@@ -59,11 +61,7 @@ for fasta in $(ls $1*.fst);
  grep $AC $1.depth >> $AC.depth ;
  Rscript $SCRIPT_DIR/coverage.r $AC.depth;
  mv Rplots.pdf $AC.pdf ;
- echo " " $(python $SCRIPT_DIR/depth.py $AC.depth) ;done
-
-#coverage.r $1.depth
-
-#calcul depth
+ echo " " $(python3 $SCRIPT_DIR/depth.py $AC.depth) ;done
 
 #cleaning 3
 
@@ -77,11 +75,12 @@ for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   do echo -n $(echo $1)" "; 
   echo -n $ac" "$(( $(grep $ac $(echo $1)_RE.sam | wc -l ) - 2 ));
  
-  echo "Sample_ACCESSION	Genome_positions	Depth" > $ac.depth; 
-  grep $ac $1_RE.depth >> $ac.depth ;
+  echo "Sample_ACCESSION	Genome_positions	Depth" > $ac.tmp.depth;
+  grep $ac $1_RE.depth >> $ac.tmp.depth ;
+  bash $SCRIPT_DIR/depth0.sh $ac.tmp.depth > $ac.depth #add 0 depth pos
   Rscript $SCRIPT_DIR/coverage.r $ac.depth;
   mv Rplots.pdf $(echo $ac)_RE.pdf ;
   echo -n " " ; echo " " $(python $SCRIPT_DIR/depth.py $ac.depth) ;done
 
 #cleaning 4
-rm $1*.AC $1.fa $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam
+rm $1*.AC  $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam $ac.tmp.depth #$1.fa

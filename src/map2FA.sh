@@ -12,6 +12,11 @@ minimap2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REmapping
 
   samtools sort $(echo $1)_RE.sam -o $(echo $1)_RE.sorted.bam
 
+  #samtools sort $(echo $1)_RE.sam -o $(echo $1)_RE.bam
+
+  #samtools view -bq 10 $(echo $1)_RE.bam > $1.filtered.bam  #mauvais mapping dans des région répétées vers 136520 une deletion masquée
+
+  #samtools sort $1.filtered.bam -o $(echo $1)_RE.sorted.bam
   samtools index $(echo $1)_RE.sorted.bam
 
   samtools depth $(echo $1)_RE.sorted.bam >> $(echo $1)_RE.depth

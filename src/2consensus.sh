@@ -12,13 +12,13 @@
 
   samtools depth $1.sorted.bam >> $1.depth
 
-  python $SCRIPT_DIR/bam2consensus.py $1 $1.AC $maxLen
+  python3 $SCRIPT_DIR/bam2consensus.py $1 $1.AC $maxLen
 
   #bash bam2consensusIVA.sh $1 #$1.AC $maxLen
 
-  python $SCRIPT_DIR/getBestAss.py $(echo $1).fasta > $(echo $1).fst
+  python3 $SCRIPT_DIR/getBestAss.py $(echo $1).fasta > $(echo $1).fst
 
-  python $SCRIPT_DIR/cropN.py $(echo $1).fst >> $(echo $1).fa  
+  python3 $SCRIPT_DIR/cropN.py $(echo $1).fst >> $(echo $1).fa
   
   #second mapping process with the new consensus sequences
   
