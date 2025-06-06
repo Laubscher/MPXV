@@ -83,4 +83,4 @@ for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   echo -n " " ; echo " " $(python $SCRIPT_DIR/depth.py $ac.depth) ;done
 
 #cleaning 4
-rm $1*.AC  $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam $ac.tmp.depth #$1.fa
+rm $1*.AC  $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam $ac.tmp.depth $1.sam #$1.fa

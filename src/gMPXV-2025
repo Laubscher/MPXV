@@ -4,7 +4,7 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && 
 
 
 if [ -z "$*" ]; then
-  echo "Arguments are missing (gMPXV-2024 -h for help)"
+  echo "Arguments are missing (gMPXV-2025 -h for help)"
   exit 0
 fi
 
@@ -17,7 +17,7 @@ fi
 while getopts ":hv:" opt; do
 	case $opt in
                  h)
-                       echo "Usage : gMPXV-2024 -options(-h display this help, -v \"viruses\" MPXV, VV) [fastqPrefix] [nb of cpu]"
+                       echo "Usage : gMPXV-2025 -options(-h display this help, -v \"viruses\" MPXV, VV) [fastqPrefix] [nb of cpu]"
                        exit 0
                        ;;
                  v)
