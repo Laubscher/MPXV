@@ -7,11 +7,14 @@ SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && 
 echo "logfile; Sample:$1" > $1.log
 
 virus=$3
+CPU=$2
+amplicon=$4
 
-bash $SCRIPT_DIR/getReads.sh $1 $2 ;
+bash $SCRIPT_DIR/getReads.sh $1 $CPU $amplicon ;
 
 
 #cleaning 1
+rm $1_tr1.fastq
 
 echo "Map to reference.."
 
@@ -30,7 +33,7 @@ if [ $virus == "IB" ]
   then bash $SCRIPT_DIR/mapCladeIB.sh $1
   fi
 if [ $virus == "ALL" ]
-  then bash $SCRIPT_DIR/map2ALL.sh $1
+  then bash $SCRIPT_DIR/map2ALL.sh $1 $CPU
 
   fi
 if [ $virus == "TEST" ]
@@ -45,7 +48,7 @@ bash $SCRIPT_DIR/2consensus.sh $1
 #cleaning 2
 
 #rm $1.sam $1.sorted.bam $1.sorted.bam.bai
-bash $SCRIPT_DIR/map2FA.sh $(echo $1)
+bash $SCRIPT_DIR/map2FA.sh $(echo $1) $CPU
 
 #rm $1.sam $1_tr.fastq $1_q10_07_m10.qual.txt #$1_Q.sam
 
