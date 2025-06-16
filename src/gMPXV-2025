@@ -1,38 +1,47 @@
 #!/bin/bash
 
-SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )"
 
 if [ -z "$*" ]; then
   echo "Arguments are missing (gMPXV-2025 -h for help)"
   exit 0
 fi
+amplicon="false"
+virus=""
 
-if [ -z "$2" ]; then
-CPU=$(nproc)
-else
-CPU=$2
-fi
-
-while getopts ":hv:" opt; do
-	case $opt in
-                 h)
-                       echo "Usage : gMPXV-2025 -options(-h display this help, -v \"viruses\" MPXV, VV) [fastqPrefix] [nb of cpu]"
-                       exit 0
-                       ;;
-                 v)
-                      echo  "Virus : $OPTARG"
-                      virus=$OPTARG
-                      shift $((OPTIND-1))
-                      ;;
-		\?)
-			echo "Unknown option $OPTARG" >&2
-			;;
-	esac
+while getopts "hv:a" opt; do
+  case $opt in
+    h)
+      echo "Usage : gMPXV-2025 -h (help) -v <virus> -a (amplicon mode) [fastqPrefix] [nb of cpu]"
+      exit 0
+      ;;
+    v)
+      virus=$OPTARG
+      ;;
+    a)
+      amplicon="true"
+      ;;
+    \?)
+      echo "Unknown option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
 done
 
-# main
+# Remove options from positional args
+shift $((OPTIND - 1))
 
-bash $SCRIPT_DIR/fastq2consensus.sh $1 $CPU $virus $4 2>"$1".log
+# Positional arguments
+FASTQ_PREFIX=$1
+CPU=${2:-$(nproc)}
 
-exit 0
+# Debug prints
+echo "FASTQ prefix: $FASTQ_PREFIX"
+echo "CPU: $CPU"
+echo "Virus: $virus"
+echo "Amplicon mode: $amplicon"
+
+# Call downstream script
+bash "$SCRIPT_DIR/fastq2consensus.sh" "$FASTQ_PREFIX" "$CPU" "$virus" "$amplicon" 2>"$FASTQ_PREFIX.log"
