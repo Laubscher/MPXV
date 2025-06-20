@@ -1,7 +1,7 @@
 #!/bin/bash
-#argument [1] = prfix, [2] = ref
+#argument [1] = prfix, [2] = ref,  [3] = CPU, [4] ac_threshold
 bam_fname=$1".sorted.bam"
-ac_threshold=10
+ac_threshold=$4
 af_threshold=0.6
 
 >$1.fasta
