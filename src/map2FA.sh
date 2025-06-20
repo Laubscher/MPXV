@@ -2,7 +2,11 @@
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
-minimap2 -t $2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REmapping
+CPU=$2
+
+THRESHOLD=10  #minimum depth for final consensus
+
+minimap2 -t $CPU -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REmapping
 
   grep ">" $1.fa | cut -f2 -d ">" > $(echo $1)_RE.AC
 
@@ -10,20 +14,19 @@ minimap2 -t $2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REm
 
   maxLen=$(( $maxLen + 100 ))
 
-  samtools sort $(echo $1)_RE.sam -o $(echo $1)_RE.sorted.bam
+  samtools sort --threads $CPU  $(echo $1)_RE.sam -o $(echo $1)_RE.sorted.bam
 
   #samtools sort $(echo $1)_RE.sam -o $(echo $1)_RE.bam
 
-  #samtools view -bq 10 $(echo $1)_RE.bam > $1.filtered.bam  #mauvais mapping dans des région répétées vers 136520 une deletion masquée
+  #samtools view -bq 10 $(echo $1)_RE.bam > $1.filtered.bam  #si mauvais mapping dans des région répétées vers 136520 une deletion masquée
 
   #samtools sort $1.filtered.bam -o $(echo $1)_RE.sorted.bam
-  samtools index $(echo $1)_RE.sorted.bam
 
-  samtools depth $(echo $1)_RE.sorted.bam >> $(echo $1)_RE.depth
+  samtools index --threads $CPU $(echo $1)_RE.sorted.bam
 
-  bash $SCRIPT_DIR/bam2consensusIVA.sh $(echo $1)_RE $(echo $1)_RE.AC $2 10  #
+  samtools depth --threads $CPU $(echo $1)_RE.sorted.bam >> $(echo $1)_RE.depth
 
-  #python $SCRIPT_DIR/getBestAss.py $(echo $1).fasta > $(echo $1).fst
+  bash $SCRIPT_DIR/bam2consensusIVA.sh $(echo $1)_RE $(echo $1)_RE.AC $CPU $THRESHOLD
 
   python $SCRIPT_DIR/cropN2.py $(echo $1)_RE.fasta >> $(echo $1)_RE.fa
 

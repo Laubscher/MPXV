@@ -10,8 +10,8 @@ virus=$3
 CPU=$2
 amplicon=$4
 
-bash $SCRIPT_DIR/getReads.sh $1 $CPU $amplicon ;
-
+#bash $SCRIPT_DIR/getReads.sh $1 $CPU $amplicon ;
+bash $SCRIPT_DIR/split_and_run.sh $1 $CPU $amplicon ;
 
 #cleaning 1
 rm $1_tr1.fastq
