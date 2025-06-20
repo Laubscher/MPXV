@@ -21,7 +21,7 @@ minimap2 -t $2 -ax map-ont $1.fa $(echo $1)_tr.fastq > $(echo $1)_RE.sam   # REm
 
   samtools depth $(echo $1)_RE.sorted.bam >> $(echo $1)_RE.depth
 
-  bash $SCRIPT_DIR/bam2consensusIVA.sh $(echo $1)_RE $(echo $1)_RE.AC
+  bash $SCRIPT_DIR/bam2consensusIVA.sh $(echo $1)_RE $(echo $1)_RE.AC $2 10  #
 
   #python $SCRIPT_DIR/getBestAss.py $(echo $1).fasta > $(echo $1).fst
 

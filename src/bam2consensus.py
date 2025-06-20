@@ -36,7 +36,7 @@ with pysam.AlignmentFile(bam_fname, "rb") as bam:
                 if pileup_read.is_del:
                     #allele = "-"
                     #allele_counter[allele] += 1
-                    pass #allele = "-" # on part du principe qu'il n'y apas de déletion
+                    pass #allele = "-" # on part du principe qu'il n'y a pas de déletion
                 else:
                     allele = pileup_read.alignment.query_sequence[pileup_read.query_position]
                     allele_counter[allele] += 1

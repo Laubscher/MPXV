@@ -43,7 +43,7 @@ if [ $virus == "TEST" ]
 echo "Sample_ACCESSION	Genome_positions	Depth" > $1.depth
 
 
-bash $SCRIPT_DIR/2consensus.sh $1
+bash $SCRIPT_DIR/2consensus.sh $1 $CPU
 
 #cleaning 2
 
@@ -77,7 +77,7 @@ echo "Generate coverage plot.."
 for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   do echo -n $(echo $1)" "; 
   echo -n $ac" "$(( $(grep $ac $(echo $1)_RE.sam | wc -l ) - 2 ));
- 
+
   echo "Sample_ACCESSION	Genome_positions	Depth" > $ac.tmp.depth;
   grep $ac $1_RE.depth >> $ac.tmp.depth ;
   bash $SCRIPT_DIR/depth0.sh $ac.tmp.depth > $ac.depth #add 0 depth pos
@@ -86,4 +86,4 @@ for ac in $(grep ">" $(echo $1)_RE.fasta | cut -f2 -d ">");
   echo -n " " ; echo " " $(python $SCRIPT_DIR/depth.py $ac.depth) ;done
 
 #cleaning 4
-rm $1*.AC  $1*.fasta $1_tr.fastq $1*qual.txt $1*_RE.sam $ac.tmp.depth $1.sam #$1.fa
+rm $1*.AC  $1*.fasta  $1*qual.txt $1*_RE.sam $ac.tmp.depth $1.sam #$1.fa #$1_tr.fastq
