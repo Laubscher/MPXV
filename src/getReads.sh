@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 
-#multiple cpu ?
+#One CPU per job 
 echo "Remove adapters"
 python3 $SCRIPT_DIR/../porexop/porechop-runner.py -i $1.fastq -o $1_tr1.fastq #1> /dev/null # trimming
 #REMOVE amplicon primer  à tester
