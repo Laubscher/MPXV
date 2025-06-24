@@ -5,9 +5,13 @@ Setting : minimum depth **10x**
 
 ## Usage 
 
-Usage : gMPXV-2024 -v ALL [fastqPrefix] [nb of cpu]
+Usage : gMPXV-2025 -v ALL (-a) [fastqPrefix] [nb of cpu]
+
+-a for amplicon option 
 
 need ungziped fastq
+
+
 
 ## Dependencies:
 
