@@ -76,13 +76,12 @@ RUN apt-get update && apt-get install -y \
       ncbi-blast+ \
       bowtie \
       bowtie2 \
-      python \
+      python-is-python3 \
       python3 \
       fastqc \
       cutadapt \
       subread \
       salmon \
-      porechop \
 && rm -rf /var/cache/apt/* /var/lib/apt/lists/*;
 
 # minimap + (k8/paftools.js)
@@ -133,10 +132,23 @@ RUN mkdir -p /tmp/flye \
    fi) \
    && python3 setup.py install \
    && rm -rf /tmp/flye
-   
-COPY --chmod=755 porexop/* /usr/bin/porexop/
-COPY --chmod=755 src/* /usr/bin/src/
-COPY --chmod=755 db/* /usr/bin/db/
+
+# Cloner iVar à la version 1.4.3
+
+# Cloner iVar, compiler et installer
+RUN git clone https://github.com/andersen-lab/ivar.git /opt/ivar \
+  && cd /opt/ivar \
+  && git checkout v1.4.3 \
+  && ./autogen.sh \
+  && ./configure \
+  && make \
+  && make install
+
+RUN Rscript -e "install.packages(c('readr', 'dplyr','gplots', 'ggplot2'), repos='https://cloud.r-project.org')"
+
+COPY --chmod=755 porexop/ /usr/bin/porexop/
+COPY --chmod=755 src/ /usr/bin/src/
+COPY --chmod=755 db/ /usr/bin/db/
    
 ENV PATH="/usr/local/bin:${PATH}"
 

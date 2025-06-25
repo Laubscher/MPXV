@@ -22,7 +22,7 @@ for ac in sequencesDico:
     while seq[-1]=="N":
      seq= seq[0:-2]
   
-    print(">"+ sys.argv[1].split(".")[0])  #va remplacé l'ac par nom du fichier càd prélévement + segment
+    print(">"+ sys.argv[1].split(".")[0].split("/")[-1])  #va remplacé l'ac par nom du fichier càd prélévement + segment
     print(seq)
   
   except :
